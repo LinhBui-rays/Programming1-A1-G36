@@ -299,8 +299,8 @@ public class Step3 {
             }
         } else {
             // If the number of groups is larger than 79, the chart cannot be displayed
-            System.out.println("\nOut of range. Data cannot be displayed");
-            System.exit(0); // End of function
+            System.out.println("\nOut of range. Data cannot be displayed\n");
+
         }
     }
 
