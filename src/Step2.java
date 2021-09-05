@@ -69,6 +69,7 @@ public class Step2 {
 
     public static int[] findNumberOfDaysAndNumberOfGroups(int total_days, int n_group) {
         if (total_days % n_group != 0) {
+            // Creating an array to store data
             int[] arr = findNumberOfDaysForEachGroup(total_days, n_group);
             int[] maxmin = findMaxMin(arr);
 //            System.out.println(Arrays.toString(arr));
@@ -453,6 +454,7 @@ public class Step2 {
             String[] parts = General.splitString(line);
 //            System.out.printf("'%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'\n", parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
 
+            // Get the data of the previous date that users entered
             if (Objects.equals(parts[2], location) && General.stringToDate(parts[3]).before(General.stringToDate(date))) {
                 if (max < Long.parseLong(parts[6])) {
                     max = Long.parseLong(parts[6]);
