@@ -18,7 +18,7 @@ public class Step1 {
         do {
             String geoArea = chooseGeoArea();
             boolean validDate = true;
-
+            input = null;
             do {
                 if (!validDate) {
                     System.out.printf("Please input valid dates!\n");
