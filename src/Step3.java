@@ -123,6 +123,7 @@ public class Step3 {
 
                 br.close();
 
+                // Get user input
                 System.out.printf("Overview:\n");
                 System.out.printf("- Region: %s\n", parts[3]);
                 System.out.printf("- Starting Date: %s\n", starting_date);
@@ -135,12 +136,14 @@ public class Step3 {
     }
 
     public static Display createTabularDisplay(ArrayList<String> list) throws IOException, ParseException {
+        // Read CSV file
         BufferedReader br = new BufferedReader(new FileReader("covid-data3.csv"));
         String line;
 
         line = br.readLine();
         int type = 0;
 
+        // Split data in the CSV file
         if (Objects.equals(line.split(",")[1], "new_total")) {
             type = 1;
         } else if (Objects.equals(line.split(",")[1], "up_to")) {
@@ -149,8 +152,10 @@ public class Step3 {
 
         br.close();
 
+        // Creating an array list to store all the data that will be presented in the table
         ArrayList<Group> g = new ArrayList<Group>();
 
+        // Loop through the array list
         for (String a : list) {
             String[] parts = a.split(",");
             g.add(new Group(Integer.parseInt(parts[0]), parts[1], parts[2], Long.parseLong(parts[3])));
@@ -187,13 +192,16 @@ public class Step3 {
         return new ChartDisplay(g, type);
     }
 
+    // Method to create an array list consists of all data in CSV3 for processing
     public static ArrayList<String> returnGroupsFromFileCSV3() throws IOException, ParseException {
+        // Read CSV3 file which consists of all the newest data used for table and chart
         BufferedReader br = new BufferedReader(new FileReader("covid-data3.csv"));
         int value_type = 0;
         String line;
 
         line = br.readLine();
 
+        // Get total and upto data
         if (Objects.equals(line.split(",")[1], "new_total")) {
             value_type = 1;
         } else if (Objects.equals(line.split(",")[1], "up_to")) {
@@ -204,6 +212,7 @@ public class Step3 {
         line2 = br.readLine();
         String[] tmp = line2.split(",");
 
+        // Allocate the data in the CSV file according to their columns
         String starting_date = tmp[4];
         int group = Integer.parseInt(tmp[0]);
         String previous_new_total = tmp[9];
@@ -213,7 +222,6 @@ public class Step3 {
 
         String previous_starting_date = null, previous_end_date = null;
         ArrayList<String> list = new ArrayList<String>();
-
 
 
         while ((line2 = br.readLine()) != null) {
@@ -227,7 +235,10 @@ public class Step3 {
                 c.setTime(General.stringToDate(starting_date));
                 c.add(Calendar.DATE, -1);
                 previous_end_date = General.dateToString(c.getTime());
+
+                // The method get and return the array list consists of data according to the users chosen metrics
                 if (value_type == 1) {
+                    // Add elements to the array list
                     list.add(String.format("%d,%s,%s,%s", group - 1, previous_starting_date, previous_end_date, previous_new_total));
                 } else {
                     list.add(String.format("%d,%s,%s,%s", group - 1, previous_starting_date, previous_end_date, previous_up_to));
@@ -239,7 +250,9 @@ public class Step3 {
             previous_up_to = parts[10];
         }
 
+        // The method get and return the array list consists of data according to the users chosen metrics
         if (value_type == 1) {
+            // Add elements to the array list
             list.add(String.format("%d,%s,%s,%s", group, starting_date, last_date, previous_new_total));
         } else {
             list.add(String.format("%d,%s,%s,%s", group, starting_date, last_date, previous_up_to));
