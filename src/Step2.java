@@ -6,13 +6,17 @@ public class Step2 {
     public static void main(String[] args) throws IOException {
     }
 
-
+    // This method executes the first half of feature 2
     public static int[] feature2a() throws IOException {
+        // Create a System.in Scanner instance
         Scanner sc = new Scanner(System.in);
+
+        // Declare and/or initialise variables used later on
         String input = null;
         int choice = 0;
         int[] arr = new int[]{0,0};
 
+        // If the user does not agree to the recommended grouping by method 3, prompts the user to choose again
         do {
             if (arr[0] == -1 && arr[1] == -1) {
                 input = null;
@@ -23,7 +27,10 @@ public class Step2 {
             System.out.printf("          2. Group by Number of Groups\n");
             System.out.printf("          3. Group by Number of Days in 1 Group\n");
 
+            // If the input is not an integer or is not in the given range, ask for the input again
             do {
+                // This is to ensure that the message the user is shown the first time differs from the message they see
+                // after having made a mistake
                 if (input == null) {
                     System.out.printf("Your choice: ");
                 } else {
@@ -35,29 +42,37 @@ public class Step2 {
                 }
             } while (!General.checkIfInt(input) || (choice > 3 || choice < 1));
 
+            // This is the total number of days
             int lines = General.countLines("covid-data2.csv");
 
+            // Declare and/or initialise variables used later on
             int n_group = 1, i = 0;
+            String extra = null;
 
+            // If the user choose No grouping, return an array of {lines, 1}, meaning there are as many groups as there
+            // are days, and each group consist of 1 day
             if (choice == 1) {
                 arr = new int[]{lines, 1};
             } else if (choice == 2) {
                 System.out.println();
-                do {
-                    if (i == 0) {
-                        System.out.printf("How many groups do you want to divide into? (Positive integer value only): ");
-                    }
+                input = null;
 
-                    if (n_group < 1) {
+                do {
+                    if (input == null) {
                         System.out.printf("How many groups do you want to divide into? (Positive integer value only): ");
                     } else if (n_group > lines) {
-                        System.out.printf("The inputted number of groups exceeded the total number of days! Please enter a valid number of groups: ");
+                        System.out.printf("The inputted number of days exceeded the total number of days! Please enter a valid number of days: ");
+                    } else {
+                        System.out.print("How many groups do you want to divide into? (Positive integer value only): ");
                     }
 
-                    n_group = sc.nextInt();
-                    sc.nextLine(); // Workaround
-                    i++;
-                } while (n_group < 1 || n_group > lines);
+                    input = sc.nextLine();
+                    if (General.checkIfInt(input)) {
+                        n_group = Integer.parseInt(input);
+                    } else {
+                        n_group = 0;
+                    }
+                } while (!General.checkIfInt(input) || (n_group < 1 || n_group > lines));
 
                 arr = findNumberOfDaysAndNumberOfGroups(lines, n_group);
             } else {
@@ -67,9 +82,9 @@ public class Step2 {
         return arr;
     }
 
+    // A method that find the number of groups and their respective days
     public static int[] findNumberOfDaysAndNumberOfGroups(int total_days, int n_group) {
         if (total_days % n_group != 0) {
-            // Creating an array to store data
             int[] arr = findNumberOfDaysForEachGroup(total_days, n_group);
             int[] maxmin = findMaxMin(arr);
 //            System.out.println(Arrays.toString(arr));
@@ -89,6 +104,7 @@ public class Step2 {
         }
     }
 
+    // A method that find the number of days from a number of groups
     public static int[] findNumberOfDaysForEachGroup(int total_days, int num_of_groups) {
         int days_in_1_group = total_days / num_of_groups;
         int tmp_n = days_in_1_group * num_of_groups;
@@ -117,6 +133,7 @@ public class Step2 {
         return arr;
     }
 
+    // This method counts how many times something repeats in an array
     public static int countFreq(int arr[], int n) {
         int count = 0;
         for (int j : arr) {
@@ -127,6 +144,7 @@ public class Step2 {
         return count;
     }
 
+    // Find max and min values of an array and return them as an array of 2 long elements
     public static long[] findMaxMinLong(long[] arr) {
         long max = arr[0];
         long min = arr[0];
@@ -142,6 +160,7 @@ public class Step2 {
         return new long[]{max, min};
     }
 
+    // Find max and min values of an array and return them as an array of 2 long elements
     public static int[] findMaxMin(int[] arr) {
         int max = arr[0];
         int min = arr[0];
@@ -157,25 +176,29 @@ public class Step2 {
         return new int[]{max, min};
     }
 
+    // A method that finds the number of group from a given number of days per group
     public static int[] findNumberOfGroupsFromGivenDate(int total_days) {
         Scanner sc = new Scanner(System.in);
         int day_number = 1, i = 0;
+        String input = null;
 
         do {
-            if (i == 0) {
-                System.out.print("\nPlease input the number of days in one group (Positive integer value only): ");
-            }
-
-            if (day_number < 1) {
-                System.out.print("Please input the number of days in one group (Positive integer value only): ");
+            if (input == null) {
+                System.out.printf("Please input the number of days in one group (Positive integer value only): ");
             } else if (day_number > total_days) {
                 System.out.printf("The inputted number of days exceeded the total number of days! Please enter a valid number of days: ");
+            } else {
+                System.out.printf("Please input the number of days in one group (Positive integer value only): ");
             }
 
-            day_number = sc.nextInt();
-            sc.nextLine(); // Workaround
-            i++;
-        } while (day_number < 1 || day_number > total_days);
+            input = sc.nextLine();
+            if (General.checkIfInt(input)) {
+                day_number = Integer.parseInt(input);
+            } else {
+                day_number = 0;
+            }
+        } while (!General.checkIfInt(input) || (day_number < 1 || day_number > total_days));
+
 
         int floored_num_of_groups = total_days / day_number;
         float true_num_of_groups = (float) total_days / day_number;
@@ -232,6 +255,8 @@ public class Step2 {
          return new int[]{-1,-1};
     }
 
+    // This method continues from feature2a, and does most of the calculation. The calculated data is stored into a file
+    // called covid-data3.csv
     public static void feature2() throws IOException, ParseException {
         Scanner sc = new Scanner(System.in);
         int metric = 0, type = 0, check = 0;
@@ -248,6 +273,8 @@ public class Step2 {
         System.out.printf("          2. New deaths\n");
         System.out.printf("          3. New people vaccinated\n");
 
+        // This is to ensure that the message the user is shown the first time differs from the message they see
+        // after having made a mistake
         do {
             if (input == null) {
                 System.out.printf("Your choice: ");
@@ -276,6 +303,8 @@ public class Step2 {
 
         input = null;
 
+        // This is to ensure that the message the user is shown the first time differs from the message they see
+        // after having made a mistake
         do {
             if (input == null) {
                 System.out.printf("Your choice: ");
@@ -299,7 +328,7 @@ public class Step2 {
         int new_vaccinated = 0;
         String line;
 
-        // Divisible
+        // if length == 2 => The days are split into a number of groups with equal number of days
         if (arr.length == 2) {
             while ((line = br.readLine()) != null) {
                 String[] parts = General.splitString(line);
@@ -335,11 +364,7 @@ public class Step2 {
             }
         }
 
-        // arr[0]:num_groups_with_larger_days    2
-        // arr[1]:larger_num_of_days_in_1_group  8
-        // arr[2]:num_groups_with_smaller_days   2
-        // arr[3]:smaller_num_of_days_in_1_group 7
-
+        // if length == 4 => The days are split into 2 types of groups, each type has their own number of members
         if (arr.length == 4) {
             while ((line = br.readLine()) != null) {
                 String[] parts = General.splitString(line);
@@ -454,7 +479,6 @@ public class Step2 {
             String[] parts = General.splitString(line);
 //            System.out.printf("'%s' '%s' '%s' '%s' '%s' '%s' '%s' '%s'\n", parts[0], parts[1], parts[2], parts[3], parts[4], parts[5], parts[6], parts[7]);
 
-            // Get the data of the previous date that users entered
             if (Objects.equals(parts[2], location) && General.stringToDate(parts[3]).before(General.stringToDate(date))) {
                 if (max < Long.parseLong(parts[6])) {
                     max = Long.parseLong(parts[6]);
