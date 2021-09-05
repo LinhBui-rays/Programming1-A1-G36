@@ -1,30 +1,41 @@
-// step3.java
+// Step3.java
 import java.io.*;
 import java.text.ParseException;
 import java.util.*;
 
-public class step3 {
+public class Step3 {
     public static void main(String[] args) throws IOException, ParseException {
     }
 
     public static void feature3(String starting_date, String end_date) throws IOException, ParseException {
         Scanner sc = new Scanner(System.in);
+        String input = null;
+        int check = 0;
 
         ArrayList<String> list = returnGroupsFromFileCSV3();
 
         long[] arr = new long[list.size()];
 
         for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
+//            System.out.println(list.get(i));
             arr[i] = Long.parseLong((list.get(i).split(",", -1))[3]);
         }
 
         System.out.printf("How would you like to display the data?\n");
         System.out.printf("          1. Tabular Display\n");
         System.out.printf("          2. Chart Display\n");
-        System.out.printf("Your choice: ");
-        int check = sc.nextInt();
-        sc.nextLine(); // Workaround
+
+        do {
+            if (input == null) {
+                System.out.printf("Your choice: ");
+            } else {
+                System.out.printf("Invalid input! Only type in 1, or 2: ");
+            }
+            input = sc.nextLine();
+            if (General.checkIfInt(input)) {
+                check = Integer.parseInt(input);
+            }
+        } while (!General.checkIfInt(input) || (check > 2 || check < 1));
 
         System.out.println();
 
@@ -64,7 +75,7 @@ public class step3 {
         System.out.printf("- Chosen Metric: %s\n", metric);
         System.out.printf("- Chosen Calculation type: %s\n", calc_type);
 
-        System.out.println("________________________________________________________________________________\n");
+        System.out.println("____________________________________________________________________________________________________________________\n");
 
         String choice;
         do {
@@ -73,9 +84,11 @@ public class step3 {
             } else {
                 System.out.printf("Would you like to view in Tabular format?\n");
             }
+            do {
+                System.out.printf("Your choice (Y/N): ");
+                choice = sc.nextLine().toUpperCase(Locale.ROOT);
+            } while (!Objects.equals(choice, "N") && !Objects.equals(choice, "Y"));
 
-            System.out.printf("Your choice (Y/N): ");
-            choice = sc.nextLine().toUpperCase(Locale.ROOT);
 
             System.out.println();
 
@@ -118,7 +131,7 @@ public class step3 {
                 System.out.printf("- Chosen Metric: %s\n", metric);
                 System.out.printf("- Chosen Calculation type: %s\n", calc_type);
             }
-            System.out.println("________________________________________________________________________________\n");
+            System.out.println("____________________________________________________________________________________________________________________\n");
         } while (choice.equals("Y"));
     }
 
@@ -211,9 +224,9 @@ public class step3 {
                 previous_starting_date = starting_date;
                 starting_date = parts[4];
                 Calendar c = Calendar.getInstance();
-                c.setTime(step1.stringToDate(starting_date));
+                c.setTime(General.stringToDate(starting_date));
                 c.add(Calendar.DATE, -1);
-                previous_end_date = step1.dateToString(c.getTime());
+                previous_end_date = General.dateToString(c.getTime());
                 if (value_type == 1) {
                     list.add(String.format("%d,%s,%s,%s", group - 1, previous_starting_date, previous_end_date, previous_new_total));
                 } else {
@@ -244,8 +257,8 @@ public class step3 {
             double fitValueX = Math.floor(79 / numValues.length) + 3 * Math.round(numValues.length) / 79;
             // round down number to the nearest integer and adjust scale
             // Get X axis value
-            long max = step2.findMaxMinLong(numValues)[0];
-            long min = step2.findMaxMinLong(numValues)[1];
+            long max = Step2.findMaxMinLong(numValues)[0];
+            long min = Step2.findMaxMinLong(numValues)[1];
             long xAxisScale = (long) Math.ceil((max - min) / 23); // round to the nearest integer
 
             // plot values into chart

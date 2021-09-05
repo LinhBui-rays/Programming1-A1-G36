@@ -73,7 +73,7 @@ class ChartDisplay extends Display {
         }
 
         // call function to add chart point
-        step3.addChartElements(twoArr, numValues);
+        Step3.addChartElements(twoArr, numValues);
 
         // Display chart
         for(int row = 0; row < twoArr.length; row++) {
