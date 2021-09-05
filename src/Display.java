@@ -17,6 +17,7 @@ public class Display {
     }
 }
 
+// Child method inherits from parent class
 class TabularDisplay extends Display {
 
     public TabularDisplay() {
@@ -26,6 +27,7 @@ class TabularDisplay extends Display {
         super(g, t);
     }
 
+    // Set up the format of the table in console
     public void display() {
         if (type == 1) {
             System.out.println("+------------------------------------------------------------------------+");
@@ -37,10 +39,12 @@ class TabularDisplay extends Display {
             System.out.println("+------------------------------------------------------------------------+");
         }
 
+        // Looping through the data needs to be displayed
         for (Group group : groups) {
+            // Align items to fit intable
             System.out.printf("|%10d        | %10s - %10s |  %15s          |\n", group.group, group.starting_date, group.end_date, group.value);
         }
-
+        // Bottom border of the table
         System.out.println("+------------------------------------------------------------------------+");
     }
 }

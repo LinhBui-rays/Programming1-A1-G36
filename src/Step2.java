@@ -442,7 +442,9 @@ public class Step2 {
 
     }
 
+    // Method to find the vaccinated data previous to the users' input date (for calculation purpose)
     public static long findVaccinatedBeforeDate(String location, String date) throws IOException, ParseException {
+        // Read CSV file
         BufferedReader br = new BufferedReader(new FileReader("covid-data.csv"));
         String line;
         long max = 0;
