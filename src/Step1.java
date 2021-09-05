@@ -75,6 +75,7 @@ public class Step1 {
                 }
 
                 validDate = validSDate && validEDate;
+
             } while (!validDate);
 
             search("covid-data.csv", "covid-data2.csv", geoArea, starting_date, end_date);
