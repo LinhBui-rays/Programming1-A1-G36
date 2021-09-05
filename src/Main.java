@@ -109,7 +109,7 @@ public class Main {
             return;
         }
 
-        // Run the end function again should option 1, 2, or 3 was chosen.
+        // Run the end function again should option 1, 2, or 3 be chosen.
         end(starting_date, end_date);
     }
 }
