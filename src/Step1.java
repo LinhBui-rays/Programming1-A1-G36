@@ -24,7 +24,7 @@ public class Step1 {
                 }
                 System.out.printf("How would you like to select your date range?\n");
                 System.out.printf("          1. Start Date - End Date\n");
-                System.out.printf("          2. Start Date - Days/Weeks Afters\n");
+                System.out.printf("          2. Start Date - Days/Weeks After\n");
                 System.out.printf("          3. Days/Weeks Before - End Date\n");
 
                 input = null;
