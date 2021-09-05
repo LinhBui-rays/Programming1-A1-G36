@@ -9,4 +9,4 @@ Bui Tuan Linh (S3877765): Maintain
 
 Link to GitHub URL: https://github.com/LinhBui-rays/Programming1-A1-G36
 
-Link to YouTube video: 
+Link to Teams video: https://tinyurl.com/DemoVideoProgramming1 
