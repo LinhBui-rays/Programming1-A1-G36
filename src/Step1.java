@@ -18,6 +18,7 @@ public class Step1 {
         do {
             String geoArea = chooseGeoArea();
             boolean validDate = true;
+            boolean validSDate = true, validEDate = true;
             do {
                 if (!validDate) {
                     System.out.printf("Please input valid dates!\n");
@@ -63,19 +64,17 @@ public class Step1 {
 
                 System.out.println();
 
-                if (checkValidDate(geoArea, starting_date)) {
-                    validDate = true;
-                } else {
+                if (!checkValidDate(geoArea, starting_date)) {
                     System.out.println("ERROR: Invalid starting date!\n");
-                    validDate = false;
+                    validSDate = false;
                 }
 
-                if (checkValidDate(geoArea, end_date)) {
-                    validDate = true;
-                } else {
+                if (!checkValidDate(geoArea, end_date)) {
                     System.out.println("ERROR: Invalid end date!\n");
-                    validDate = false;
+                    validEDate = false;
                 }
+
+                validDate = validSDate && validEDate;
             } while (!validDate);
 
             search("covid-data.csv", "covid-data2.csv", geoArea, starting_date, end_date);
