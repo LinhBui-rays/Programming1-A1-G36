@@ -167,9 +167,10 @@ public class Step3 {
 
         line = br.readLine();
         int type = 0;
-
+        //Get new total data from array list
         if (Objects.equals(line.split(",")[1], "new_total")) {
             type = 1;
+        //Get upto data from array list
         } else if (Objects.equals(line.split(",")[1], "up_to")) {
             type = 2;
         }
@@ -251,57 +252,68 @@ public class Step3 {
 
     public static void addChartElements(String[][] drawChart, long[] numValues) {
         // Fit data into chartS
+        // Because the chart is in fixed size 23x79 so the maximum groups that the chart can represent is 79
         if (numValues.length < 79) {
-            // Get Y axis scale
+            // Scale the data according to the number of values need to be presented
             double fitValueX = Math.floor(79 / numValues.length) + 3 * Math.round(numValues.length) / 79;
             // round down number to the nearest integer and adjust scale
             // Get X axis value
-            long max = Step2.findMaxMinLong(numValues)[0];
-            long min = Step2.findMaxMinLong(numValues)[1];
+            long max = Step2.findMaxMinLong(numValues)[0]; //find maximum value
+            long min = Step2.findMaxMinLong(numValues)[1]; //find minimum value
+            // find the value corresponding to one pixel in the Y axis (there are 23 pixels)
             long xAxisScale = (long) Math.ceil((max - min) / 23); // round to the nearest integer
 
-            // plot values into chart
+            // Looping through all the data that need to be presented
             for (int i = 0; i < numValues.length; i++) {
-                int height = 22; // 22 points to represent the data according to the requirements // reset height after adding values
-                //
+                // Reset height after one calculation
+                int height = 22; // 22 points to represent the data according to the requirements
                 for (int rows = 0; i < drawChart.length; rows++) {
+                    //Calculate the position of values on the X axis
+                    //Scale the data according to the number of values need to be present
                     long positionValue = (xAxisScale * height) + min - (int) Math.floor(numValues.length);
                     if (positionValue - numValues[i] <= 0) {
                         for (int columns = 1; columns < drawChart[rows].length - 1; columns++) {
                             if (columns - 1 == i * fitValueX) {
+                                // Symbol "%" represents a chart point
                                 drawChart[rows][columns] = "%";
                             }
                         }
                         break;
                     }
-                    height -= 1; // Go to next line
+                    // When one value is plotted, the function will go to the next line to plot the next value
+                    height -= 1;
                 }
             }
         } else {
+            // If the number of groups is larger than 79, the chart cannot be displayed
             System.out.println("\nOut of range. Data cannot be displayed");
-            System.exit(0);
+            System.exit(0); // End of function
         }
     }
 
     public static void ChartDisplay(long[] numValues) {
+        // the method accept an array consisting of all values need to be presented
         String[][] twoArr = new String[24][80]; // 24 rows , 80 columns
 
+        // Get enough space for the chart in the console log
         for(int row = 0; row < twoArr.length; row++) {
             for(int col = 0; col < twoArr[row].length; col++) {
                 // Assign empty space to the chart
                 twoArr[row][col] = " ";
+                // X axis consists of all "_" symbol
                 twoArr[twoArr.length - 1][col] = "_";
             }
+            // Y axis consists of all "|" symbol
             twoArr[row][0] = "|";
         }
 
-        // call function to add chart point
+        // call function to add chart points to the empty chart
         addChartElements(twoArr, numValues);
 
         // Display chart
         for(int row = 0; row < twoArr.length; row++) {
             for(int col = 0; col < twoArr[row].length; col++) {
-                // Assign empty space to the chart
+                //Print out the point of the chart
                 System.out.print(twoArr[row][col]);
             }
             System.out.println();

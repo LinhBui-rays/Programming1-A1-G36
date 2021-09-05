@@ -59,7 +59,7 @@ class ChartDisplay extends Display {
         for (int i = 0; i < groups.size(); i++) {
             numValues[i] = groups.get(i).value;
         }
-
+        // Using 2 dimensional array to store data of Y and X axis
         String[][] twoArr = new String[24][80]; // 24 rows , 80 columns
 
         for(int row = 0; row < twoArr.length; row++) {
