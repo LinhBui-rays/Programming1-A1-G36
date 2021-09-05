@@ -1,4 +1,3 @@
-// Main.java
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
@@ -97,14 +96,14 @@ public class Main {
             String[] dates = basicFlow1();
             basicFlow2();
             basicFlow3(dates[0], dates[1]);
-            // If the user wants to Change the grouping of the Data, we run the program again from basicFlow2
+        // If the user wants to Change the grouping of the Data, we run the program again from basicFlow2
         } else if (check == 2) {
             basicFlow2();
             basicFlow3(starting_date, end_date);
-            // If the user wants to Display the grouped Data again, we run the program again from basicFlow3
+        // If the user wants to Display the grouped Data again, we run the program again from basicFlow3
         } else if (check == 3) {
             basicFlow3(starting_date, end_date);
-            // If the user is done with the application, display a goodbye message, and exit the program
+        // If the user is done with the application, display a goodbye message, and exit the program
         } else {
             System.out.printf("\nAlrighty! Thank you for using our CDI application!\nStay sane and stay safe!\n");
             return;

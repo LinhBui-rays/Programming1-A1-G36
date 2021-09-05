@@ -1,4 +1,3 @@
-// Group.java
 public class Group {
     int group;
     String starting_date;

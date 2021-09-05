@@ -1,4 +1,3 @@
-// Step3.java
 import java.io.*;
 import java.text.ParseException;
 import java.util.*;
@@ -159,7 +158,7 @@ public class Step3 {
 
 
 
-        return new TabularDisplay(g, type);
+       return new TabularDisplay(g, type);
     }
 
     public static Display createChartDisplay(ArrayList<String> list) throws IOException, ParseException {

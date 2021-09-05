@@ -1,4 +1,3 @@
-// Step2.java
 import java.io.*;
 import java.text.ParseException;
 import java.util.*;
@@ -229,7 +228,7 @@ public class Step2 {
             System.out.printf("\n%d days can be grouped into %d group(s) of %d day(s)\n", total_days, floored_num_of_groups, day_number);
             return new int[]{floored_num_of_groups, day_number};
         }
-        return new int[]{-1,-1};
+         return new int[]{-1,-1};
     }
 
     public static void feature2() throws IOException, ParseException {
