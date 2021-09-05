@@ -18,7 +18,6 @@ public class Step1 {
         do {
             String geoArea = chooseGeoArea();
             boolean validDate = true;
-            input = null;
             do {
                 if (!validDate) {
                     System.out.printf("Please input valid dates!\n");
@@ -28,6 +27,7 @@ public class Step1 {
                 System.out.printf("          2. Start Date - Days/Weeks Afters\n");
                 System.out.printf("          3. Days/Weeks Before - End Date\n");
 
+                input = null;
                 do {
                     if (input == null) {
                         System.out.printf("Your choice: ");
